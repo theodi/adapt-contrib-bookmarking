@@ -4,6 +4,8 @@
 
 The **Bookmarking** extension is responsible for maintaining a record of the learner's current location within the course so that when they quit and relaunch they may be given the option to be returned to that same location - hence the term 'bookmarking'. 
 
+> NOTE: This version of the bookmarking extension uses LocalStorage as a way to track a users location. This can also be used with a language switcher and if the localStorage location exists then it will bypass the prompt and automatically take the user to the last location. If an location is provided from Spoor (see next paragraph) then this behavious will not be seen!
+
 > Note that although 'bookmarking' is a feature of SCORM and the **Bookmarking** extension therefore requires the [Spoor extension](https://github.com/adaptlearning/adapt-contrib-spoor), it has nothing whatsoever to do with the storing and restoring of course progress; this is handled by the spoor extension completely independently of the bookmarking function and will take place whether the **Bookmarking** extension is installed/enabled or not.
 
 <img src="https://github.com/adaptlearning/documentation/blob/master/04_wiki_assets/plug-ins/images/bookmarking.gif" alt="bookmarking in action" width="598" height="516"/>
