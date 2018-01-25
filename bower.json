@@ -1,7 +1,7 @@
 {
   "name": "adapt-contrib-bookmarking-multiLang",
   "version": "2.1.2",
-  "framework": ">=2.2",
+  "framework": ">=2.0",
   "homepage": "https://github.com/theodi/adapt-contrib-bookmarking-multiLang",
   "issues": "https://github.com/theodi/adapt-contrib-bookmarking-multiLang/issues/",
   "displayName" : "Bookmarking Multi-Lang",
