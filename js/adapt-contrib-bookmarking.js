@@ -1,8 +1,8 @@
 define([
-    'core/js/adapt'
+    'coreJS/adapt'
 ], function(Adapt) {
 
-    var Bookmarking = Backbone.Controller.extend({
+    var Bookmarking = _.extend({
 
         bookmarkLevel: null,
         watchViewIds: null,
@@ -157,10 +157,7 @@ define([
             } else {
                 //set location as page id
                 this.setLocationID(pageView.model.get('_id'));
-
-                this.watchViewIds = _.map(pageView.model.findDescendantModels(this.bookmarkLevel+"s"), function(desc) {
-                    return desc.get("_id");
-                });
+                this.watchViewIds = pageView.model.findDescendants(this.bookmarkLevel+"s").pluck("_id");
                 this.listenTo(Adapt, this.bookmarkLevel + "View:postRender", this.captureViews);
                 this.listenToOnce(Adapt, "remove", this.releaseViews);
                 $(window).on("scroll", this._onScroll);
@@ -213,8 +210,8 @@ define([
             if (highestOnscreenLocation) this.setLocationID(highestOnscreenLocation);
         }
 
-    });
+    }, Backbone.Events);
 
-    return new Bookmarking();
+    Bookmarking.initialize();
 
 });
