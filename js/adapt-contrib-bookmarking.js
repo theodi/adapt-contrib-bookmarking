@@ -9,6 +9,7 @@ define([
         watchViews: [],
         restoredLocationID: null,
         currentLocationID: null,
+        bypassPrompt: false,
 
         initialize: function () {
             this.listenToOnce(Adapt, "router:location", this.onAdaptInitialize);
@@ -31,10 +32,18 @@ define([
             this._onScroll = _.debounce(_.bind(this.checkLocation, this), 1000);
             this.listenTo(Adapt, 'menuView:ready', this.setupMenu);
             this.listenTo(Adapt, 'pageView:preRender', this.setupPage);
+            this.listenTo(Adapt.config, 'change:_activeLanguage', function() {
+                this.listenToOnce(Adapt, "app:dataReady", this.onAdaptInitialize);
+            });
         },
 
         checkRestoreLocation: function() {
-            this.restoredLocationID = Adapt.offlineStorage.get("location");
+            this.bypassPrompt = true;
+            this.restoredLocationID = localStorage.getItem("location");
+            if (Adapt.offlineStorage.get("location")) {
+                this.restoredLocationID = Adapt.offlineStorage.get("location");
+                this.bypassPrompt = false;
+            }
 
             if (!this.restoredLocationID || this.restoredLocationID === "undefined") return;
 
@@ -60,7 +69,7 @@ define([
                 var isLocationFullyInview = locationOnscreen && (locationOnscreen.percentInview === 100);
                 if (isLocationOnscreen && isLocationFullyInview) return;
 
-                if(Adapt.course.get('_bookmarking')._showPrompt === false) {
+                if(Adapt.course.get('_bookmarking')._showPrompt === false || this.bypassPrompt) {
                     this.navigateToPrevious();
                 } else {
                     this.showPrompt();
@@ -166,6 +175,7 @@ define([
             if (!Adapt.offlineStorage) return;
             if (this.currentLocationID == id) return;
             Adapt.offlineStorage.set("location", id);
+            localStorage.setItem("location",id);
             this.currentLocationID = id;
         },
 
