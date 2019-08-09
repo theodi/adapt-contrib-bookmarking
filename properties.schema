@@ -85,7 +85,7 @@
         "contentobject": {
           "type": "object",
           "properties": {
-            "_bookmarking": {
+            "_bookmarkingML": {
               "type": "object",
               "required": false,
               "legend": "Bookmarking",
